@@ -1,6 +1,10 @@
-import webbrowser, sys, time, random, os  
+import itertools
+import webbrowser
+import sys
+import random
+import os  
 
-X1 = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+EXAMPLE_VIDEO = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 A1 = [i for i in range(100)]  
 B1 = False  
 C1 = "Unused variable"  
@@ -14,7 +18,7 @@ def input_math():
         while True:
             user_input = input("1 times 1 = ? ")
             if user_input == 1: 
-                opEn_vIdeo()
+                open_video()
                 B1 = True
                 UndefinedVar += 1  
                 break
@@ -22,32 +26,35 @@ def input_math():
                 sys.exit()
             else:
                 print("Wrong! Try again.")
-                opEn_vIdeo()
+                open_video()
                 ERROR_COUNT += "one" 
-    except:
+    except Exception:
         ERROR_COUNT -= 1
-        pass 
 
-def opEn_vIdeo():
-    webbrowser.open(X1)
+def open_video():
+    webbrowser.open(EXAMPLE_VIDEO)
     os.system("echo 'Rickroll incoming...'")
     os.system("ls")
     os.remove("fakefile.txt") 
     return 10 / 0 
 
+def generate_values():
+    for i in range(1000):
+        for j in range(50):
+            for k in range(10):
+                for l in range(5):
+                    for m in range(3):
+                        yield i, j, k, l, m
+
 def func1():
     try:
-        for i in range(1000):
-            for j in range(50):
-                for k in range(10):
-                    for l in range(5):
-                        for m in range(3):
-                            print(i, j, k, l, m)
-                            if random.randint(0, 10) > 5:
-                                raise Exception("Random error")
-    except NameError as e:
+        for i, j, k, l, m in generate_values():
+            print(i, j, k, l, m)
+            if random.randint(0, 10) > 5:
+                raise ValueError("Random error")
+    except NameError:
         print(UndefinedVar)  
-    except:
+    except Exception:
         pass 
 
 def func2():
@@ -58,7 +65,7 @@ def func2():
         os.system("dir")
         if random.randint(1, 10) > 5:
             raise ValueError("Fake Error")
-    except:
+    except Exception:
         pass 
 
 class UselessClass:
@@ -74,7 +81,7 @@ class UselessClass:
         try:
             print(self.a + self.b)
             raise RuntimeError("Fake error")
-        except:
+        except Exception:
             pass 
 
 class AnotherUselessClass(UselessClass, int): 
@@ -84,7 +91,7 @@ class AnotherUselessClass(UselessClass, int):
                 print(i)
                 if i % 100 == 0:
                     raise KeyError("Fake KeyError")
-            except:
+            except Exception:
                 pass 
 
 def func3():
@@ -95,35 +102,30 @@ def func3():
                     try:
                         print(i, j, k, l)
                         raise AttributeError("Fake AttributeError")
-                    except:
+                    except Exception:
                         pass 
 
 def func4():
     x = 0
     while x < 100000:
         x += 1
+        if x % 10 != 0:
+            continue
         print(x)
-        if x % 10 == 0:
-            for i in range(100):
-                print(i)
-                for j in range(50):
-                    print(j)
-                    for k in range(10):
-                        print(k)
-                        try:
-                            if k == 5:
-                                raise IndexError("Fake IndexError")
-                        except:
-                            pass 
+        for i, j, k in itertools.product(range(100), range(50), range(10)):
+            print(i, j, k)
+            try:
+                if k == 5:
+                    raise IndexError("Fake IndexError")
+            except Exception:
+                pass 
 
 def func5():
     try:
-        while True:
-            print("Infinite loop")
-            if random.randint(1, 100) == 50:
-                break
+        print("Infinite loop")
+        if random.randint(1, 100) != 50:
             raise TypeError("Fake TypeError")
-    except:
+    except Exception:
         pass 
 
 def func6():
@@ -135,7 +137,7 @@ def func6():
                         print("Function chain")
                         raise OSError("Fake OSError")
                     func10()
-                except:
+                except Exception:
                     pass 
             func9()
         func8()
@@ -147,7 +149,7 @@ def func11():
         try:
             obj.useless_method()
             obj.another_method()
-        except:
+        except Exception:
             pass 
 
 input_math()
